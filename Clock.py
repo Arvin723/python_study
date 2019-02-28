@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys, random, math, pygame
 from pygame.locals import *
 from datetime import datetime, date, time
