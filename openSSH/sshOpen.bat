@@ -1,0 +1,1 @@
+start C:\Git\git-bash.exe sshCmd.bat
