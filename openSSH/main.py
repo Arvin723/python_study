@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+import tkinter.messagebox
 import json
 import os
 
@@ -14,6 +15,8 @@ config data
 '''
 with open("cfg.json") as ff:
     data = json.load(ff)
+with open("cfg_old.json", "w") as f:
+    json.dump(data, f)
 gitPath = data["gitPath"]
 addrs = data["addrs"]
 
@@ -37,13 +40,23 @@ def readScript():
 def openScript():
     global sshStr
     sshStr = et_ssh.get()
+    if len(sshStr) == 0:
+        tk.messagebox.showinfo('打开失败', '地址不能为空')
+        return
     writeScript()
-    os.system('sshOpen.bat')
+    if os.system('sshOpen.bat') != 0:
+        tk.messagebox.showinfo('警告', '打开失败')
 
 def saveScript():
     i = len(addrs)
-    if i == MAXNUM or (et_txt.get() in addrs) == True:
-        print("create failed")
+    if i == MAXNUM:
+        tk.messagebox.showinfo('添加失败', '数量已达最大,\n请保存至既存条目')
+        return
+    elif et_txt.get() in addrs:
+        tk.messagebox.showinfo('添加失败', '该条目已存在,\n,\ 请尝试\"保存到此\"按钮')
+        return
+    elif len(et_ssh.get()) == 0:
+        tk.messagebox.showinfo('添加失败', 'ssh地址不能为空')
         return
 
     var = StringVar()
@@ -68,9 +81,14 @@ class SSHCtrl:
         sshStr = addrs[buttonTexts[self.index].get()]
         print(sshStr)
         writeScript()
-        os.system('sshOpen.bat')
+        if os.system('sshOpen.bat') != 0:
+            tk.messagebox.showinfo('警告', '打开失败')
 
     def saveSSH(self):
+        if len(et_ssh.get()) == 0:
+            tk.messagebox.showinfo('添加失败', 'ssh地址不能为空')
+            return
+
         oldTxt = buttonTexts[self.index].get()
         buttonTexts[self.index].set(et_txt.get())
         addrs.pop(oldTxt)
