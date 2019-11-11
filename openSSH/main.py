@@ -88,6 +88,9 @@ class SSHCtrl:
         if len(et_ssh.get()) == 0:
             tk.messagebox.showinfo('添加失败', 'ssh地址不能为空')
             return
+        if buttonTexts[self.index].get() in addrs:
+            tk.messagebox.showinfo('添加失败', '该名称存在,\n请尝试更改名称')
+            return
 
         oldTxt = buttonTexts[self.index].get()
         buttonTexts[self.index].set(et_txt.get())
