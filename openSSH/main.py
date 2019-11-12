@@ -53,7 +53,7 @@ def saveScript():
         tk.messagebox.showinfo('添加失败', '数量已达最大,\n请保存至既存条目')
         return
     elif et_txt.get() in addrs:
-        tk.messagebox.showinfo('添加失败', '该条目已存在,\n,\ 请尝试\"保存到此\"按钮')
+        tk.messagebox.showinfo('添加失败', '该名称已存在,\n请尝试更改名称')
         return
     elif len(et_ssh.get()) == 0:
         tk.messagebox.showinfo('添加失败', 'ssh地址不能为空')
@@ -88,8 +88,8 @@ class SSHCtrl:
         if len(et_ssh.get()) == 0:
             tk.messagebox.showinfo('添加失败', 'ssh地址不能为空')
             return
-        if buttonTexts[self.index].get() in addrs:
-            tk.messagebox.showinfo('添加失败', '该名称存在,\n请尝试更改名称')
+        if et_txt.get() in addrs:
+            tk.messagebox.showinfo('添加失败', '该名称已存在,\n请尝试更改名称')
             return
 
         oldTxt = buttonTexts[self.index].get()
